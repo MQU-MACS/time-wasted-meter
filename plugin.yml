@@ -15,3 +15,4 @@ commands:
     timeleaderboard:
         description: View the leaderboard of scores
         usage: /timeleaderboard [page]
+    
