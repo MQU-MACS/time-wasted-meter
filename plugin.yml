@@ -1,0 +1,17 @@
+name: TimeWastedMeter
+author: memedealer
+version: 1.1.0
+api-version: 1.16
+
+main: macs.timewasted.TimeWastedMeter
+
+commands:
+    timewasted:
+        description: Check your time wasted stats!
+        usage: /timewasted [player]
+    timerecords:
+        description: View the records set by players.
+        usage: /timerecords [player]
+    timeleaderboard:
+        description: View the leaderboard of scores
+        usage: /timeleaderboard [page]

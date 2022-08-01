@@ -1,0 +1,22 @@
+# TimeWastedMeter config
+
+strings:
+    milestone:
+        first: '&6&l%s &6&lhas reached a milestone!'
+        first-record: '&6&l%s &6&lhas set a NEW RECORD!!!'
+        second: '&aThey have wasted &l%,d &aticks (about %s hours) online'
+        third: '&aThey are the &l%s &aperson to do so. Congrats!'
+    command:
+        first: '&6======[ &l%s&6 ]======'
+        second: '&aWasted: &l%s&a ticks (~ %s hours)'
+        third: '&a&lMilestone progress:'
+        noplayer: '&cNo player named "%s" found!'
+    bar:
+        stats: '&6Check your stats! &l/timewasted'
+        leaderboard: '&6Check the leaderboard! &l/timeleaderboard'
+        milestone: '&aNext Milestone: &l%s &a(~ %s)'
+    leaderboard:
+        first: '&6======[ &lLeaderboard&6 ]======'
+        other: '  &7%s - %s&7: &c%s'
+        me: '  &6%s - %s&6 (You) : &c%s'
+        page: '&7Page %d of %d | /timeleaderboard [page]'
