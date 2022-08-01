@@ -15,4 +15,6 @@ commands:
     timeleaderboard:
         description: View the leaderboard of scores
         usage: /timeleaderboard [page]
-    
+    timemeter:
+        description: Configure the time meter on your screen
+        usage: /timemeter <show|hide|colour|style>

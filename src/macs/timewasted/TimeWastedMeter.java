@@ -11,6 +11,7 @@ import macs.timewasted.checker.MilestoneManager;
 import macs.timewasted.checker.TimeChecker;
 import macs.timewasted.command.CommandLeaderboard;
 import macs.timewasted.command.CommandRecords;
+import macs.timewasted.command.CommandTimeMeter;
 import macs.timewasted.command.CommandTimeWasted;
 import macs.timewasted.meter.TimeMeter;
 
@@ -43,6 +44,7 @@ public class TimeWastedMeter extends JavaPlugin {
 		getCommand("timewasted").setExecutor(new CommandTimeWasted(this, this.milestones, this.config));
 		getCommand("timerecords").setExecutor(new CommandRecords(this.milestones, this.config));
 		getCommand("timeleaderboard").setExecutor(new CommandLeaderboard(this.config));
+		getCommand("timemeter").setExecutor(new CommandTimeMeter());
 	}
 	
 	@Override
