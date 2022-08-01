@@ -73,6 +73,10 @@ public class Util {
 		}
 	}
 	
+	public static double clamp(double val, double min, double max) {
+		return Math.min(Math.max(val, min), max);
+	}
+	
 	/**
 	 * Resolves an OfflinePlayer based on username, but only if they
 	 * have played on this server before (to avoid making a web request

@@ -87,7 +87,7 @@ public class TimeMeter implements Listener, Runnable {
 		double percentage = (double)aggregate.progress / (double)aggregate.difference;
 					
 		// set bar percentage
-		bar.setProgress(percentage);
+		bar.setProgress(Util.clamp(percentage, 0d, 1d));
 		
 		// calculate bar text
 		BarDisplay display = DISPLAY_SEQUENCE[this.displayIndex];
