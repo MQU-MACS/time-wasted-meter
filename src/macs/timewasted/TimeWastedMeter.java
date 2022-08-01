@@ -13,6 +13,7 @@ import macs.timewasted.command.CommandLeaderboard;
 import macs.timewasted.command.CommandRecords;
 import macs.timewasted.command.CommandTimeMeter;
 import macs.timewasted.command.CommandTimeWasted;
+import macs.timewasted.meter.BarPreferences;
 import macs.timewasted.meter.TimeMeter;
 
 public class TimeWastedMeter extends JavaPlugin {
@@ -20,6 +21,7 @@ public class TimeWastedMeter extends JavaPlugin {
 	private MilestoneManager milestones;
 	private TimeChecker checker;
 	private TimeMeter meter;
+	private BarPreferences barPrefs;
 	private FileConfiguration config;
 	
 	private int checkerID;
@@ -30,6 +32,7 @@ public class TimeWastedMeter extends JavaPlugin {
 		this.saveDefaultConfig();
 		this.config = this.getConfig();
 		this.milestones = new MilestoneManager(this.getDataFolder(), this.getLogger());
+		this.barPrefs = new BarPreferences(this.getDataFolder(), this.getLogger());
 		this.checker = new TimeChecker(this.milestones, this.config);
 		this.checkerID = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, this.checker, 0l, 20l);
 		if(this.checkerID <= -1) {
@@ -44,7 +47,7 @@ public class TimeWastedMeter extends JavaPlugin {
 		getCommand("timewasted").setExecutor(new CommandTimeWasted(this, this.milestones, this.config));
 		getCommand("timerecords").setExecutor(new CommandRecords(this.milestones, this.config));
 		getCommand("timeleaderboard").setExecutor(new CommandLeaderboard(this.config));
-		getCommand("timemeter").setExecutor(new CommandTimeMeter());
+		getCommand("timemeter").setExecutor(new CommandTimeMeter(this.barPrefs));
 	}
 	
 	@Override
