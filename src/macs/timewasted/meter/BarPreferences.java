@@ -82,7 +82,7 @@ public class BarPreferences {
 		return this.prefs.get(player.getUniqueId());
 	}
 	
-	private static class Prefs {
+	public static class Prefs {
 		public boolean hidden;
 		public BarColor color;
 		public BarStyle style;

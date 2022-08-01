@@ -9,7 +9,9 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -75,6 +77,10 @@ public class Util {
 	
 	public static double clamp(double val, double min, double max) {
 		return Math.min(Math.max(val, min), max);
+	}
+	
+	public static boolean isPlayer(CommandSender sender) {
+		return sender instanceof Player;
 	}
 	
 	/**
