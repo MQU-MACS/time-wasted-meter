@@ -17,14 +17,17 @@ import com.google.common.collect.Lists;
 
 import macs.timewasted.meter.BarPreferences;
 import macs.timewasted.meter.BarPreferences.Prefs;
+import macs.timewasted.meter.TimeMeter;
 import macs.timewasted.util.Util;
 
 public class CommandTimeMeter implements CommandExecutor, TabCompleter {
 
 	private BarPreferences prefs;
+	private TimeMeter meter;
 	
-	public CommandTimeMeter(BarPreferences prefs) {
+	public CommandTimeMeter(BarPreferences prefs, TimeMeter meter) {
 		this.prefs = prefs;
+		this.meter = meter;
 	}
 
 	@Override
@@ -46,11 +49,13 @@ public class CommandTimeMeter implements CommandExecutor, TabCompleter {
 		switch(property) {
 		case "show":
 			prefs.hidden = false;
+			this.meter.updatePlayerPrefs(target, prefs);
 			this.prefs.save();
 			sender.sendMessage(ChatColor.GREEN + "Time meter is now shown");
 			break;
 		case "hide":
 			prefs.hidden = true;
+			this.meter.updatePlayerPrefs(target, prefs);
 			this.prefs.save();
 			sender.sendMessage(ChatColor.GREEN + "Time meter is now hidden");
 			break;
@@ -62,6 +67,7 @@ public class CommandTimeMeter implements CommandExecutor, TabCompleter {
 					String input = args[1].toUpperCase();
 					BarColor color = BarColor.valueOf(input);
 					prefs.color = color;
+					this.meter.updatePlayerPrefs(target, prefs);
 					this.prefs.save();
 					sender.sendMessage(ChatColor.GREEN + "Changed meter colour to " + color.name().toLowerCase());
 				} catch(IllegalArgumentException e) {
@@ -77,6 +83,7 @@ public class CommandTimeMeter implements CommandExecutor, TabCompleter {
 					String input = args[1].toUpperCase();
 					BarStyle style = BarStyle.valueOf(input);
 					prefs.style = style;
+					this.meter.updatePlayerPrefs(target, prefs);
 					this.prefs.save();
 					sender.sendMessage(ChatColor.GREEN + "Changed meter style to " + style.name().toLowerCase());
 				} catch(IllegalArgumentException e) {

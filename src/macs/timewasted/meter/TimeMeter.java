@@ -6,8 +6,6 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -20,6 +18,7 @@ import org.bukkit.scoreboard.Scoreboard;
 
 import macs.timewasted.checker.MilestoneManager;
 import macs.timewasted.command.MilestoneAggregate;
+import macs.timewasted.meter.BarPreferences.Prefs;
 import macs.timewasted.util.Util;
 
 public class TimeMeter implements Listener, Runnable {
@@ -35,15 +34,17 @@ public class TimeMeter implements Listener, Runnable {
 	private final Map<UUID, BossBar> bossBars = new HashMap<>();
 	private final FileConfiguration config;
 	private final MilestoneManager milestones;
+	private final BarPreferences prefs;
 	private final Scoreboard scoreboard;
 	private Objective objective;
 	
 	private int displayIndex = 0;
 	private int displayCounter = 0;
 
-	public TimeMeter(FileConfiguration config, MilestoneManager milestones) {
+	public TimeMeter(FileConfiguration config, MilestoneManager milestones, BarPreferences prefs) {
 		this.config     = config;
 		this.milestones = milestones;
+		this.prefs      = prefs;
 		this.scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
 		this.objective  = this.scoreboard.getObjective("time");
 	}
@@ -74,7 +75,8 @@ public class TimeMeter implements Listener, Runnable {
 		for(UUID uuid : this.bossBars.keySet()) {
 			// try to resolve the player
 			OfflinePlayer player = Util.resolvePlayerForUUID(uuid);
-			if(player == null || !player.isOnline()) continue;
+			boolean hidden = this.prefs.isHiddenFor(uuid);
+			if(player == null || !player.isOnline() || hidden) continue;
 			
 			// update the bar
 			refreshBar(player, this.bossBars.get(uuid));
@@ -117,19 +119,34 @@ public class TimeMeter implements Listener, Runnable {
 		}
 	}
 	
+	public void updatePlayerPrefs(Player player, Prefs p) {
+		BossBar bar = this.bossBars.get(player.getUniqueId());
+		if(bar != null) {
+			bar.setColor(p.color);
+			bar.setStyle(p.style);
+			if(p.hidden) {
+				bar.removeAll();
+			} else {
+				bar.addPlayer(player);
+			}
+		}
+	}
+	
 	@EventHandler
 	public void onPlayerJoined(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
 		UUID uuid = player.getUniqueId();
 		
 		BossBar bar = this.bossBars.get(uuid);
+		Prefs p = this.prefs.forPlayer(player);
+		
 		if(bar == null) {
-			bar = Bukkit.createBossBar(event.getPlayer().getName(), BarColor.YELLOW, BarStyle.SEGMENTED_10);
+			bar = Bukkit.createBossBar(event.getPlayer().getName(), p.color, p.style);
 			bar.removeAll();
 			this.bossBars.put(uuid, bar);
 		}
 		
-		bar.addPlayer(player);
+		if(!p.hidden) bar.addPlayer(player);
 		if(this.objective != null) refreshBar(player, bar);
 	}
 	
@@ -139,7 +156,7 @@ public class TimeMeter implements Listener, Runnable {
 		UUID uuid = player.getUniqueId();
 		
 		if(this.bossBars.containsKey(uuid)) {
-			this.bossBars.get(uuid).removePlayer(player);
+			this.bossBars.get(uuid).removeAll();
 		}
 	}
 

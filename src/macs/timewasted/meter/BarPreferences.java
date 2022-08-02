@@ -62,7 +62,6 @@ public class BarPreferences {
 			JsonObject data = new JsonObject();
 			for(UUID uuid : this.prefs.keySet()) {
 				Prefs prefs = this.prefs.get(uuid);
-				this.logger.info(String.valueOf(prefs.same(DEFAULT_PREFS)));
 				if(prefs.same(DEFAULT_PREFS)) continue;
 				
 				JsonObject prefJson = new JsonObject();
@@ -87,6 +86,13 @@ public class BarPreferences {
 			this.prefs.put(player.getUniqueId(), prefs);
 		}
 		return this.prefs.get(player.getUniqueId());
+	}
+	
+	public boolean isHiddenFor(UUID uuid) {
+		if(!this.prefs.containsKey(uuid)) {
+			return false;
+		}
+		return this.prefs.get(uuid).hidden;
 	}
 	
 	public static class Prefs {

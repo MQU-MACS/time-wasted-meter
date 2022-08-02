@@ -38,7 +38,7 @@ public class TimeWastedMeter extends JavaPlugin {
 		if(this.checkerID <= -1) {
 			getLogger().log(Level.SEVERE, "Repeating checker task failed to schedule!");
 		}
-		this.meter = new TimeMeter(this.config, this.milestones);
+		this.meter = new TimeMeter(this.config, this.milestones, this.barPrefs);
 		this.meterID = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, this.meter, 0L, 1L);
 		if(this.meterID <= -1) {
 			getLogger().log(Level.SEVERE, "Repeating meter task failed to schedule!");
@@ -47,7 +47,7 @@ public class TimeWastedMeter extends JavaPlugin {
 		getCommand("timewasted").setExecutor(new CommandTimeWasted(this, this.milestones, this.config));
 		getCommand("timerecords").setExecutor(new CommandRecords(this.milestones, this.config));
 		getCommand("timeleaderboard").setExecutor(new CommandLeaderboard(this.config));
-		getCommand("timemeter").setExecutor(new CommandTimeMeter(this.barPrefs));
+		getCommand("timemeter").setExecutor(new CommandTimeMeter(this.barPrefs, this.meter));
 	}
 	
 	@Override
