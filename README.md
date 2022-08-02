@@ -3,7 +3,7 @@ The Time wasted meter plugin for the MACS Minecraft server.
 
 ## Getting started
 You will need:
-- Java 8+
+- Java 11+
 - Maven
 - A Spigot server running 1.16+
 
