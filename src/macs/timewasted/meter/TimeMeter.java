@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.boss.BossBar;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -28,7 +29,8 @@ public class TimeMeter implements Listener, Runnable {
 	// i know there's a better way to do this, idgaf
 	private static final BarDisplay[] DISPLAY_SEQUENCE = {
 		BarDisplay.TIME_WASTED, BarDisplay.NEXT_MILESTONE, BarDisplay.CMD_STATS,
-		BarDisplay.TIME_WASTED, BarDisplay.NEXT_MILESTONE, BarDisplay.CMD_LEADERBOARD
+		BarDisplay.TIME_WASTED, BarDisplay.NEXT_MILESTONE, BarDisplay.CMD_LEADERBOARD,
+		BarDisplay.TIME_WASTED, BarDisplay.NEXT_MILESTONE, BarDisplay.CMD_CUSTOMIZE
 	};
 	
 	private final Map<UUID, BossBar> bossBars = new HashMap<>();
@@ -100,6 +102,9 @@ public class TimeMeter implements Listener, Runnable {
 				break;
 			case CMD_LEADERBOARD:
 				bar.setTitle(Util.getString("strings.bar.leaderboard", this.config));
+				break;
+			case CMD_CUSTOMIZE:
+				bar.setTitle(ChatColor.GOLD + "Customise the bar! " + ChatColor.BOLD + "/timemeter");
 				break;
 			
 			case NEXT_MILESTONE:
