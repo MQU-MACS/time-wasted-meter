@@ -16,6 +16,7 @@ import org.bukkit.entity.Player;
 import com.google.common.collect.Lists;
 
 import macs.timewasted.meter.BarPreferences;
+import macs.timewasted.meter.BarPreferences.Prefs;
 import macs.timewasted.util.Util;
 
 public class CommandTimeMeter implements CommandExecutor, TabCompleter {
@@ -38,7 +39,56 @@ public class CommandTimeMeter implements CommandExecutor, TabCompleter {
 		}
 		
 		Player target = (Player)sender;
-		sender.sendMessage(this.prefs.forPlayer(target).toString());
+		String property = args[0].toLowerCase();
+		
+		Prefs prefs = this.prefs.forPlayer(target);
+		
+		switch(property) {
+		case "show":
+			prefs.hidden = false;
+			this.prefs.save();
+			sender.sendMessage(ChatColor.GREEN + "Time meter is now shown");
+			break;
+		case "hide":
+			prefs.hidden = true;
+			this.prefs.save();
+			sender.sendMessage(ChatColor.GREEN + "Time meter is now hidden");
+			break;
+		case "colour":
+			if(args.length < 2) {
+				sender.sendMessage(ChatColor.RED + "Usage: /" + label + " colour <colour>");
+			} else {
+				try {
+					String input = args[1].toUpperCase();
+					BarColor color = BarColor.valueOf(input);
+					prefs.color = color;
+					this.prefs.save();
+					sender.sendMessage(ChatColor.GREEN + "Changed meter colour to " + color.name().toLowerCase());
+				} catch(IllegalArgumentException e) {
+					sender.sendMessage(ChatColor.RED + "Invalid colour: " + args[1]);
+				}
+			}
+			break;
+		case "style":
+			if(args.length < 2) {
+				sender.sendMessage(ChatColor.RED + "Usage: /" + label + " style <style>");
+			} else {
+				try {
+					String input = args[1].toUpperCase();
+					BarStyle style = BarStyle.valueOf(input);
+					prefs.style = style;
+					this.prefs.save();
+					sender.sendMessage(ChatColor.GREEN + "Changed meter style to " + style.name().toLowerCase());
+				} catch(IllegalArgumentException e) {
+					sender.sendMessage(ChatColor.RED + "Invalid style: " + args[1]);
+				}
+			}
+			break;
+		default:
+			sender.sendMessage(ChatColor.RED + "Unknown property: " + property);
+			sender.sendMessage(ChatColor.RED + "Usage: " + command.getUsage());
+			break;
+		}
 		
 		return true;
 	}

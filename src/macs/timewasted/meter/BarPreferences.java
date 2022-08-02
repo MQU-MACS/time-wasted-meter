@@ -48,7 +48,8 @@ public class BarPreferences {
 			for(Entry<String,JsonElement> e : data.entrySet()) {
 				if(!e.getValue().isJsonObject()) continue;
 				UUID uuid = UUID.fromString(e.getKey());
-				Prefs prefs = Util.GSON.fromJson(e.getValue(), Prefs.class);
+				Prefs prefs = new Prefs();
+				prefs.read(e.getValue().getAsJsonObject());
 				this.prefs.put(uuid, prefs);
 			}
 		} catch(Exception e) {
@@ -61,12 +62,18 @@ public class BarPreferences {
 			JsonObject data = new JsonObject();
 			for(UUID uuid : this.prefs.keySet()) {
 				Prefs prefs = this.prefs.get(uuid);
+				this.logger.info(String.valueOf(prefs.same(DEFAULT_PREFS)));
 				if(prefs.same(DEFAULT_PREFS)) continue;
-				data.add(uuid.toString(), Util.GSON.toJsonTree(prefs));
+				
+				JsonObject prefJson = new JsonObject();
+				prefs.write(prefJson);
+				data.add(uuid.toString(), prefJson);
 			}
 			
 			FileWriter writer = new FileWriter(this.file);
-			Util.GSON.toJson(data, writer);
+			String json = Util.GSON.toJson(data);
+			writer.write(json);
+			writer.close();
 			this.logger.info("Saved bar preferences");
 		} catch(Exception e) {
 			this.logger.log(Level.SEVERE, "Failed to write bar preferences!", e);
@@ -97,6 +104,18 @@ public class BarPreferences {
 			return prefs.hidden == hidden &&
 					prefs.color.equals(color) &&
 					prefs.style.equals(style);
+		}
+		
+		private void read(JsonObject obj) {
+			this.hidden = obj.get("hidden").getAsBoolean();
+			this.color = BarColor.valueOf(obj.get("color").getAsString());
+			this.style = BarStyle.valueOf(obj.get("style").getAsString());
+		}
+		
+		private void write(JsonObject obj) {
+			obj.addProperty("hidden", this.hidden);
+			obj.addProperty("color", this.color.name());
+			obj.addProperty("style", this.style.name());
 		}
 	}
 	
