@@ -127,7 +127,7 @@ public class BarPreferences {
 	
 	static {
 		DEFAULT_PREFS = new Prefs();
-		DEFAULT_PREFS.hidden = true;
+		DEFAULT_PREFS.hidden = false;
 		DEFAULT_PREFS.color = BarColor.YELLOW;
 		DEFAULT_PREFS.style = BarStyle.SEGMENTED_10;
 	}
