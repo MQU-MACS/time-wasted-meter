@@ -114,9 +114,9 @@ public class TimeChecker implements Runnable {
 		String secondLine = getString("strings.milestone.second", this.config);
 		String thirdLine  = getString("strings.milestone.third", this.config);
 		
-		Bukkit.broadcastMessage(String.format(firstLine, player.getDisplayName()));
-		Bukkit.broadcastMessage(String.format(secondLine, milestone, hourString));
-		Bukkit.broadcastMessage(String.format(thirdLine, placeString));
+		Util.broadcast(String.format(firstLine, player.getDisplayName()));
+		Util.broadcast(String.format(secondLine, milestone, hourString));
+		Util.broadcast(String.format(thirdLine, placeString));
 	}
 
 }

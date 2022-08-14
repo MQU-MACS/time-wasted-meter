@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -116,6 +117,18 @@ public class Util {
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * Broadcasts a message to the entire server. This is a temporary fix
+	 * for this issue: https://github.com/Romejanic/time-wasted-meter/issues/2
+	 * @param message The message to broadcast
+	 */
+	public static void broadcast(String message) {
+		Logger.getLogger("Broadcast").info(message);
+		for(Player player : Bukkit.getOnlinePlayers()) {
+			player.sendMessage(message);
+		}
 	}
 	
 }
