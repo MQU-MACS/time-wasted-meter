@@ -1,11 +1,11 @@
 # time-wasted-meter
-The Time wasted meter plugin for the MACS Minecraft server.
+The Time wasted meter plugin for the MACS Minecraft server, updated for 1.21+.
 
 ## Getting started
 You will need:
-- Java 11+
+- Java 21
 - Maven
-- A Spigot server running 1.16+
+- A Spigot server running 1.21+
 
 ```sh
 $ git clone https://github.com/Romejanic/time-wasted-meter.git
