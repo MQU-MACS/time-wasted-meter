@@ -1,4 +1,4 @@
-package macs.timewasted.util;
+package main.java.macs.timewasted.util;
 
 import java.io.File;
 import java.io.FileOutputStream;

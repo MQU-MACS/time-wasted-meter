@@ -1,4 +1,4 @@
-package macs.timewasted.meter;
+package main.java.macs.timewasted.meter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,10 +17,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
-import macs.timewasted.checker.MilestoneManager;
-import macs.timewasted.command.MilestoneAggregate;
-import macs.timewasted.meter.BarPreferences.Prefs;
-import macs.timewasted.util.Util;
+import main.java.macs.timewasted.checker.MilestoneManager;
+import main.java.macs.timewasted.command.MilestoneAggregate;
+import main.java.macs.timewasted.meter.BarPreferences.Prefs;
+import main.java.macs.timewasted.util.Util;
 
 public class TimeMeter implements Listener, Runnable {
 

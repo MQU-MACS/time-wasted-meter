@@ -1,4 +1,4 @@
-package macs.timewasted.checker;
+package main.java.macs.timewasted.checker;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -10,8 +10,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
-import macs.timewasted.util.Util;
-import static macs.timewasted.util.Util.getString;
+import main.java.macs.timewasted.util.Util;
+import static main.java.macs.timewasted.util.Util.getString;
 
 public class TimeChecker implements Runnable {
 

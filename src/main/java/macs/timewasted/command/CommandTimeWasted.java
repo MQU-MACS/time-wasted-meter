@@ -1,4 +1,4 @@
-package macs.timewasted.command;
+package main.java.macs.timewasted.command;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,8 +18,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
-import macs.timewasted.checker.MilestoneManager;
-import macs.timewasted.util.Util;
+import main.java.macs.timewasted.checker.MilestoneManager;
+import main.java.macs.timewasted.util.Util;
 
 public class CommandTimeWasted implements CommandExecutor, TabCompleter {
 

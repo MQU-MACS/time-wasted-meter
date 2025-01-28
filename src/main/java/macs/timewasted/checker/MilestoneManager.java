@@ -1,4 +1,4 @@
-package macs.timewasted.checker;
+package main.java.macs.timewasted.checker;
 
 import java.io.File;
 import java.io.FileReader;
@@ -17,7 +17,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
-import macs.timewasted.util.Util;
+import main.java.macs.timewasted.util.Util;
 
 public class MilestoneManager {
 

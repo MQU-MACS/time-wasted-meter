@@ -6,7 +6,7 @@
   <name>TimeWastedMeter</name>
   <build>
     <sourceDirectory>src</sourceDirectory>
-    <plugins>
+      <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.0</version>

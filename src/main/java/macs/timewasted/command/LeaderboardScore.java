@@ -1,4 +1,4 @@
-package macs.timewasted.command;
+package main.java.macs.timewasted.command;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;

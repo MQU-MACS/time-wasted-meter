@@ -1,4 +1,4 @@
-package macs.timewasted.command;
+package main.java.macs.timewasted.command;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +17,7 @@ import org.bukkit.scoreboard.Scoreboard;
 
 import com.google.common.collect.Lists;
 
-import macs.timewasted.util.Util;
+import main.java.macs.timewasted.util.Util;
 
 public class CommandLeaderboard implements CommandExecutor, TabCompleter {
 

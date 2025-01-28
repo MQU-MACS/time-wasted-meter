@@ -1,4 +1,4 @@
-package macs.timewasted;
+package main.java.macs.timewasted;
 
 import java.util.logging.Level;
 
@@ -7,14 +7,14 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import macs.timewasted.checker.MilestoneManager;
-import macs.timewasted.checker.TimeChecker;
-import macs.timewasted.command.CommandLeaderboard;
-import macs.timewasted.command.CommandRecords;
-import macs.timewasted.command.CommandTimeMeter;
-import macs.timewasted.command.CommandTimeWasted;
-import macs.timewasted.meter.BarPreferences;
-import macs.timewasted.meter.TimeMeter;
+import main.java.macs.timewasted.checker.MilestoneManager;
+import main.java.macs.timewasted.checker.TimeChecker;
+import main.java.macs.timewasted.command.CommandLeaderboard;
+import main.java.macs.timewasted.command.CommandRecords;
+import main.java.macs.timewasted.command.CommandTimeMeter;
+import main.java.macs.timewasted.command.CommandTimeWasted;
+import main.java.macs.timewasted.meter.BarPreferences;
+import main.java.macs.timewasted.meter.TimeMeter;
 
 public class TimeWastedMeter extends JavaPlugin {
 

@@ -1,4 +1,4 @@
-package macs.timewasted.meter;
+package main.java.macs.timewasted.meter;
 
 public enum BarDisplay {
 

@@ -1,4 +1,4 @@
-package macs.timewasted.command;
+package main.java.macs.timewasted.command;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,8 +14,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import macs.timewasted.checker.MilestoneManager;
-import macs.timewasted.util.Util;
+import main.java.macs.timewasted.checker.MilestoneManager;
+import main.java.macs.timewasted.util.Util;
 
 public class CommandRecords implements CommandExecutor, TabCompleter {
 

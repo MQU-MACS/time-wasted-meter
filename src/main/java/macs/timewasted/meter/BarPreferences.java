@@ -1,4 +1,4 @@
-package macs.timewasted.meter;
+package main.java.macs.timewasted.meter;
 
 import java.io.File;
 import java.io.FileReader;
@@ -17,7 +17,7 @@ import org.bukkit.entity.Player;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import macs.timewasted.util.Util;
+import main.java.macs.timewasted.util.Util;
 
 public class BarPreferences {
 

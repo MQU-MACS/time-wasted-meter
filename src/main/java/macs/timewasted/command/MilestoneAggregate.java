@@ -1,10 +1,10 @@
-package macs.timewasted.command;
+package main.java.macs.timewasted.command;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.scoreboard.Objective;
 
-import macs.timewasted.checker.MilestoneManager;
-import macs.timewasted.util.Util;
+import main.java.macs.timewasted.checker.MilestoneManager;
+import main.java.macs.timewasted.util.Util;
 
 public class MilestoneAggregate {
 
