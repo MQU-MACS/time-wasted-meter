@@ -24,7 +24,7 @@ import main.java.macs.timewasted.util.Util;
 
 public class TimeMeter implements Listener, Runnable {
 
-	private static final int SWITCH_RATE = 5 * 20; // 5 seconds = 100 ticks
+	private static final int SWITCH_RATE = 5 * 20; // 5 seconds = 100 ticks, defines how often (in ticks) the plugin should switch the display mode of the boss bars.
 	
 	// i know there's a better way to do this, idgaf
 	private static final BarDisplay[] DISPLAY_SEQUENCE = {

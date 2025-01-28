@@ -2,6 +2,8 @@ package main.java.macs.timewasted.checker;
 
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -21,14 +23,30 @@ public class TimeChecker implements Runnable {
 	private final MilestoneManager milestones;
 	private final Scoreboard scoreboard;
 	private Objective objective;
+	private final Logger logger;
 
-	public TimeChecker(MilestoneManager milestones, FileConfiguration config) {
+	public TimeChecker(MilestoneManager milestones, FileConfiguration config, Logger logger) {
 		this.config = config;
 		this.milestones = milestones;
 		this.scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
 		this.objective  = this.scoreboard.getObjective("time");
-		if(this.objective != null) {
+		this.logger = logger;
+
+		if(this.objective == null) {
+			this.logger.log(Level.WARNING, "Scoreboard objective 'time' does not exist, creating new objective.");
+			this.createTimeObjective();
+		} else {
 			this.getInitialScores();
+		}
+	}
+
+	private void createTimeObjective() {
+		try {
+			this.objective = this.scoreboard.registerNewObjective("time", "dummy", "Time Spent");
+			this.objective.setDisplaySlot(null);
+			this.logger.log(Level.INFO, "Successfully created new scoreboard objective 'time'.");
+		} catch (IllegalArgumentException e) {
+			this.logger.log(Level.SEVERE, "Failed to create new scoreboard objective 'time'. it may already exist.");
 		}
 	}
 
@@ -64,36 +82,45 @@ public class TimeChecker implements Runnable {
 		if(this.objective == null) {
 			// if objective doesn't exist, keep querying for it
 			this.objective = this.scoreboard.getObjective("time");
-			
 			if(this.objective != null) {
 				// if it now exists, get the initial scores
 				this.getInitialScores();
 			} else {
-				// otherwise cancel the tasks
+				this.logger.log(Level.WARNING, "Scoreboard objective 'time' is still missing.");
 				return;
 			}
 		}
 		
-		// loop for each online player and check if they've passed any milestones
+		// loop for each online player and update their score
 		for(Player player : Bukkit.getOnlinePlayers()) {
 			if(player == null || player.getUniqueId() == null) {
 				continue;
 			}
-		
-			// calculate current and cached scores, and calculate next milestone
-			int score = this.objective.getScore(player.getName()).getScore();
-			int cached = this.getCachedScore(player, score);
-			int milestone = Util.getNextMilestone(cached);
-			
-			if(score > milestone && milestone != 0) {
+
+			UUID uuid = player.getUniqueId();
+			String playerName = player.getName();
+			int currentScore = this.objective.getScore(playerName).getScore();
+
+			// Retrieve cached score using getCachedScore method
+			int cachedScore = this.getCachedScore(player, currentScore);
+
+			// Determine the next milestone based on cached score
+			int milestone = Util.getNextMilestone(cachedScore + 1);
+
+			// Increment the score by 20 (20ticks = 1 second)
+			int newScore = currentScore + 20;
+			this.objective.getScore(playerName).setScore(newScore);
+
+			// Check if the player has reached a milestone
+			if(newScore > milestone && milestone != 0) {
 				int place = this.milestones.getMilestonePlace(player, milestone);
 				if(place > -1) {
 					this.broadcastMilestone(player, milestone, place);
+					this.logger.log(Level.INFO, "Player '" + playerName + "' reached milestone " + milestone + " at place " + place + ".");
 				}
 			}
-			
 			// update cached score with current score
-			if(score > cached) this.scoreCache.put(player.getUniqueId(), score);
+			if(newScore > cachedScore) this.scoreCache.put(player.getUniqueId(), newScore);
 		}
 	}
 	
@@ -118,5 +145,4 @@ public class TimeChecker implements Runnable {
 		Util.broadcast(String.format(secondLine, milestone, hourString));
 		Util.broadcast(String.format(thirdLine, placeString));
 	}
-
 }

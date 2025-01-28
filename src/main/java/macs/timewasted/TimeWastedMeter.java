@@ -33,7 +33,7 @@ public class TimeWastedMeter extends JavaPlugin {
 		this.config = this.getConfig();
 		this.milestones = new MilestoneManager(this.getDataFolder(), this.getLogger());
 		this.barPrefs = new BarPreferences(this.getDataFolder(), this.getLogger());
-		this.checker = new TimeChecker(this.milestones, this.config);
+		this.checker = new TimeChecker(this.milestones, this.config, this.getLogger());
 		this.checkerID = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, this.checker, 0l, 20l);
 		if(this.checkerID <= -1) {
 			getLogger().log(Level.SEVERE, "Repeating checker task failed to schedule!");
