@@ -184,4 +184,8 @@ public class MilestoneManager {
 		return list;
 	}
 	
+	public void saveData() {
+		this.save();
+	}
+	
 }

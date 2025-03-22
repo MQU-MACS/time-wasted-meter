@@ -24,6 +24,7 @@ public class TimeChecker implements Runnable {
 	private final Scoreboard scoreboard;
 	private Objective objective;
 	private final Logger logger;
+	private volatile boolean isShutdown = false;
 
 	public TimeChecker(MilestoneManager milestones, FileConfiguration config, Logger logger) {
 		this.config = config;
@@ -77,8 +78,17 @@ public class TimeChecker implements Runnable {
 		return dirty;
 	}
 
+	public void shutdown() {
+		this.isShutdown = true;
+		this.logger.log(Level.INFO, "TimeChecker shutdown requested");
+	}
+
+
 	@Override
 	public void run() {
+		if(isShutdown) {
+			return;
+		}
 		if(this.objective == null) {
 			// if objective doesn't exist, keep querying for it
 			this.objective = this.scoreboard.getObjective("time");

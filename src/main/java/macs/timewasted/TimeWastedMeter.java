@@ -52,13 +52,44 @@ public class TimeWastedMeter extends JavaPlugin {
 	
 	@Override
 	public void onDisable() {
+		getLogger().info("Shutting down TimeWastedMeter...");
+		
+		// First signal the tasks to stop
+		if (this.checker != null) {
+			this.checker.shutdown();
+		}
+		
+		if (this.meter != null) {
+			this.meter.shutdown();
+		}
+		
+		// Then cancel the scheduler tasks
 		if(this.checkerID > -1) {
 			Bukkit.getScheduler().cancelTask(this.checkerID);
+			this.checkerID = -1;
 		}
+		
 		if(this.meterID > -1) {
 			Bukkit.getScheduler().cancelTask(this.meterID);
+			this.meterID = -1;
 		}
+		
+		// Wait a bit for tasks to finish
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// Ignore interruption
+		}
+		
+		// Unregister event handlers
 		HandlerList.unregisterAll(this.meter);
+		
+		// Save data
+		if (this.milestones != null) {
+			this.milestones.saveData();
+		}
+		
+		getLogger().info("TimeWastedMeter has been disabled successfully");
 	}
 
 }

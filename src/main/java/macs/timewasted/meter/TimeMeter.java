@@ -25,7 +25,8 @@ import main.java.macs.timewasted.util.Util;
 public class TimeMeter implements Listener, Runnable {
 
 	private static final int SWITCH_RATE = 5 * 20; // 5 seconds = 100 ticks, defines how often (in ticks) the plugin should switch the display mode of the boss bars.
-	
+	private volatile boolean isShutdown = false;
+
 	// i know there's a better way to do this, idgaf
 	private static final BarDisplay[] DISPLAY_SEQUENCE = {
 		BarDisplay.TIME_WASTED, BarDisplay.NEXT_MILESTONE, BarDisplay.CMD_STATS,
@@ -50,9 +51,20 @@ public class TimeMeter implements Listener, Runnable {
 		this.scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
 		this.objective  = this.scoreboard.getObjective("time");
 	}
-	
+
+	public void shutdown() {
+    this.isShutdown = true;
+    // Remove boss bars
+    for (BossBar bar : bossBars.values()) {
+        bar.removeAll();
+    }
+    bossBars.clear();
+}
 	@Override
 	public void run() {
+		if (isShutdown) {
+			return;
+		}
 		if(this.objective == null) {
 			// if objective doesn't exist, keep querying for it
 			this.objective = this.scoreboard.getObjective("time");
