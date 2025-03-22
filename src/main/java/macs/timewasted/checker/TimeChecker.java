@@ -112,7 +112,7 @@ public class TimeChecker implements Runnable {
 			this.objective.getScore(playerName).setScore(newScore);
 
 			// Check if the player has reached a milestone
-			if(newScore > milestone && milestone != 0) {
+			if(cachedScore < milestone && newScore >= milestone && milestone != 0) {
 				int place = this.milestones.getMilestonePlace(player, milestone);
 				if(place > -1) {
 					this.broadcastMilestone(player, milestone, place);
